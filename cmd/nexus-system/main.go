@@ -14,6 +14,8 @@ func main() {
 
 	r.HandleFunc("/ping", ping).Methods("GET")
 
+
+	logger.Print("Starting server")
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		logger.Fatalf("error %v", err)
 	}
