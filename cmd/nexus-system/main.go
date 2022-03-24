@@ -2,18 +2,19 @@ package main
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 
-	"log"
 	"net/http"
 )
 
-var logger log.Logger
+var logger logrus.Logger
 
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/ping", ping).Methods("GET")
+	logger = *logrus.New()
 
+	r.HandleFunc("/ping", ping).Methods("GET")
 
 	logger.Print("Starting server")
 	if err := http.ListenAndServe(":3000", r); err != nil {
@@ -23,4 +24,5 @@ func main() {
 
 func ping(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
+	w.Write([]byte("server up"))
 }
